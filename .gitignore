@@ -1,0 +1,11 @@
+# RUST BUILD
+/target
+
+# SECRETS
+.env
+
+# INTELLIJ
+.idea/
+*.iml
+*.http
+http-client.private.env.json
