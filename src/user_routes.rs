@@ -3,7 +3,7 @@ use serde_json::Value;
 use sqlx::Row;
 use crate::middleware::auth::AuthToken;
 
-use crate::user::{UserDAO, UserCredentials};
+use crate::user::UserDAO;
 use crate::user_service::UserService;
 use crate::utils::jwt::issue_access_token;
 
@@ -19,7 +19,7 @@ pub(crate) async fn register(mut new_user: web::Json<UserDAO>, user_service: web
 }
 
 #[post("/api/users/login")]
-pub(crate) async fn login(credentials: web::Json<UserCredentials>, user_service: web::Data<UserService>) -> impl Responder {
+pub(crate) async fn login(credentials: web::Json<UserDAO>, user_service: web::Data<UserService>) -> impl Responder {
     let result = user_service.login(&credentials.email, &credentials.password).await;
 
     if result.is_err() {
@@ -28,7 +28,7 @@ pub(crate) async fn login(credentials: web::Json<UserCredentials>, user_service:
 
     let token = issue_access_token(result.unwrap().get("id"));
 
-    HttpResponse::Ok().json(token)
+    HttpResponse::Ok().body(token)
 }
 
 #[put("/api/users/change-password")]

@@ -8,12 +8,6 @@ pub struct User {
 }
 
 #[derive(Serialize, Deserialize, Clone)]
-pub struct UserCredentials {
-    pub email: String,
-    pub password: String
-}
-
-#[derive(Serialize, Deserialize, Clone)]
 pub struct UserDAO {
     pub email: String,
     pub password: String
